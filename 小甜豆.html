@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日祝福</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* 初始页面 - 信封 */
+        .envelope-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+            cursor: pointer;
+        }
+
+        .envelope {
+            width: 200px;
+            height: 120px;
+            background-color: #ff6f61;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 60px solid #ff6f61;
+        }
+
+        .envelope::after {
+            content: '💌';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+        }
+
+        .envelope:hover {
+            transform: scale(1.1);
+        }
+
+        /* 跳转后的页面 - 爱心背景 */
+        .heart-page {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6f61;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .birthday-message {
+            text-align: center;
+            z-index: 2;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .birthday-message h1 {
+            font-size: 4rem;
+            margin: 0;
+            color: #ff6f61;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .birthday-message p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #333;
+            font-family: 'Dancing Script', cursive;
+            line-height: 1.6;
+        }
+
+        /* 爱心飘落特效 */
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .heart {
+            position: absolute;
+            top: -50px;
+            animation: fall linear infinite;
+        }
+    </style>
+</head>
+<body>
+<!-- 初始页面 - 信封 -->
+<div class="envelope-page" onclick="openHeartPage()">
+    <div class="envelope"></div>
+</div>
+
+<!-- 跳转后的页面 - 爱心背景 -->
+<div class="heart-page" id="heartPage">
+    <div class="birthday-message">
+        <h1>生日快乐！</h1>
+        <p>
+            小甜豆，<br><br>
+            生日快乐！🎂🎉<br><br>
+            又是一年你的专属节日，今天是没有流星也可以许愿的日子，恭喜你又收获了一年的快乐与幸福，很高兴今年可以陪你长大一岁。<br><br>
+            一直都想对你说，很幸运遇见你。<br><br>
+            愿你可以被时光温柔所待，万事胜意！希望你可以天天开心，早点睡觉，好好吃饭，顺顺利利，无忧无虑。希望你平平安安，永远幸福快乐，永远没有烦恼！<br><br>
+            再次祝你生日快乐，小甜豆！希望你永远健康、快乐、美丽。
+        </p>
+    </div>
+</div>
+
+<script>
+    // 跳转到爱心页面
+    function openHeartPage() {
+        document.querySelector('.envelope-page').style.display = 'none';
+        document.getElementById('heartPage').style.display = 'flex';
+
+        // 创建爱心飘落特效
+        const heartContainer = document.getElementById('heartPage');
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heartContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }, 300);
+    }
+</script>
+</body>
+</html>
