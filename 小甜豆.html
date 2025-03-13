@@ -89,14 +89,14 @@
         }
 
         .birthday-message h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             margin: 0;
             color: #ff6f61;
             font-family: 'Pacifico', cursive;
         }
 
         .birthday-message p {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin: 20px 0;
             color: #333;
             font-family: 'Dancing Script', cursive;
@@ -109,15 +109,15 @@
                 transform: translateY(100vh);
             }
         }
-
-        .heart {
-            position: absolute;
-            top: -50px;
-            animation: fall linear infinite;
-        }
     </style>
 </head>
 <body>
+<!-- 背景音乐 -->
+<audio id="bgMusic" loop>
+    <source src="1.mp3" type="audio/mpeg">
+    
+</audio>
+
 <!-- 初始页面 - 信封 -->
 <div class="envelope-page" onclick="openHeartPage()">
     <div class="envelope"></div>
@@ -141,6 +141,13 @@
 <script>
     // 跳转到爱心页面
     function openHeartPage() {
+        // 播放背景音乐
+        const music = document.getElementById('bgMusic');
+        music.play().catch(error => {
+            console.log('点击信封后音乐会开始播放');
+        });
+
+        // 切换页面
         document.querySelector('.envelope-page').style.display = 'none';
         document.getElementById('heartPage').style.display = 'flex';
 
@@ -149,11 +156,12 @@
         setInterval(() => {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerText = '❤️';
+            heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
             heartContainer.appendChild(heart);
 
+            // 移除爱心元素
             setTimeout(() => {
                 heart.remove();
             }, 5000);
